@@ -1,0 +1,70 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
+    }
+}
+
+plugins {
+
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "jacoco"
+
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = 1.8
+//noinspection GroovyUnusedAssignment
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url 'http://repository.jboss.org/maven2/'
+    }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-amqp")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile('com.googlecode.json-simple:json-simple:1.1.1')
+    compile group: 'com.ibm.icu', name: 'icu4j', version: '4.8'
+
+//    implementation project(':core')
+
+    compile group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.10.5'
+    runtime group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.10.5'
+    runtime group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.5'
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    //testCompile("org.assertj:assertj-core:1.5.0")
+    testCompile("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testCompile("cz.jirutka.validator:validator-collection:2.1.6")
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
